@@ -10,10 +10,10 @@ matches = re.findall("<description>(.*)</description", r.text)
 # pull the second match
 status = matches[1]
 
+color = "red"
+
 if(status == "No Alert"):
-    print("Green!")
-else:
-    print("Red")
+    color = "green"
 
 # send an email with the result
 import smtplib, ssl
@@ -26,10 +26,10 @@ port = config["smtp_port"]
 sender_email = config["sender_email"]
 receiver_email = config["recipient_email"]
 password = config["password"]
-message = """\
-Subject: Hi there
+message = f"""\
+Subject: Spare the Air Day Alert
 
-This message is sent from Python."""
+The light is {color}."""
 
 context = ssl.create_default_context()
 with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
