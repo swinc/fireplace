@@ -1,4 +1,4 @@
-import requests, re, json
+import requests, re, json, os
 
 
 # pull the daily RSS feed from BAAQMD
@@ -18,7 +18,8 @@ if(status == "No Alert"):
 # send an email with the result
 import smtplib, ssl
 
-with open('../config.json') as f:
+path_to_config = os.path.dirname(__file__) + '../config.json'
+with open(path_to_config) as f:
   config = json.load(f)
 
 smtp_server = config["smtp_server"]
