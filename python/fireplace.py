@@ -1,5 +1,4 @@
-import requests
-import re
+import requests, re, json
 
 
 # pull the daily RSS feed from BAAQMD
@@ -19,11 +18,14 @@ else:
 # send an email with the result
 import smtplib, ssl
 
-port = 465  # For SSL
-smtp_server = "smtp.gmail.com"
-sender_email = "<you@email.com>"  # your dev email address
-receiver_email = "<recipient@email.com>"  # who you're sending the email too
-password = "<your_password>"  # enter your password
+with open('../config.json') as f:
+  config = json.load(f)
+
+smtp_server = config["smtp_server"]
+port = config["smtp_port"]
+sender_email = config["sender_email"]
+receiver_email = config["recipient_email"]
+password = config["password"]
 message = """\
 Subject: Hi there
 

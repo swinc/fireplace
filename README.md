@@ -2,6 +2,24 @@
 
 This project is a collection of python and arduino scripts that reports on whether there is a Bay Area Spare the Air day.
 
+## Config
+
+To avoid keeping passwords and other customized details in the public repo, they are stored in a `config.json` file that is not part of the repo.
+
+When the `fireplace.py` script is run, it opens the `config.json` file locally and reads in the customized data.
+
+Therefore, upon install, you must create a file called `config.json` in the top-level directory of this repository and fill out the following fields:
+
+```
+{
+  "smtp_server": "<your_smtp_server",
+  "smtp_port": <port>,
+  "sender_email": "<your_sender_email>",
+  "recipient_email": "<your_recipient>",
+  "password": "<your_password>"
+}
+```
+
 ## RSS Feed
 
 ```
