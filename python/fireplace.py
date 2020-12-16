@@ -18,7 +18,7 @@ if(status == "No Alert"):
 # send an email with the result
 import smtplib, ssl
 
-path_to_config = os.path.dirname(__file__) + '../config.json'
+path_to_config = os.path.dirname(__file__) + '/../config.json'
 with open(path_to_config) as f:
   config = json.load(f)
 
