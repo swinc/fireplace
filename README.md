@@ -1,6 +1,6 @@
 # Fireplace!
 
-This code pulls ...
+This project is a collection of python and arduino scripts that reports on whether there is a Bay Area Spare the Air day.
 
 ## RSS Feed
 
@@ -22,8 +22,3 @@ This code pulls ...
 </channel>
 </rss>
 ```
-
-
-### What do we do if RSS feed is nothing?
-
-Send an email1
