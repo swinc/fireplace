@@ -1,0 +1,8 @@
+{
+  "smtp_server": "your_smtp_server",
+  "smtp_port": 465,
+  "sender_email": "sender_email",
+  "recipient_email": "recipient_email",
+  "password": "password",
+  "path_to_www": "/var/www/html"
+}
