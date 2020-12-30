@@ -35,7 +35,7 @@ s.connect(('10.255.255.255', 1))
 host_ip = s.getsockname()[0]
 
 # ==== send an email with the result ====
-www_file = os.path.basename(config["path_to_www_root"])
+www_file = os.path.basename(config["path_to_www_file"])
 message = f"""\
 Subject: Fireplace Alert!
 
