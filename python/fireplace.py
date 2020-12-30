@@ -25,7 +25,7 @@ with open(path_to_config) as f:
     config = json.load(f)
 
 # ==== write result to file ====
-f = open(config["path_to_www_root"], "w")
+f = open(config["path_to_www_file"], "w")
 f.write(color)
 f.close()
 

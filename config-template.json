@@ -4,5 +4,5 @@
   "sender_email": "sender_email",
   "recipient_email": "recipient_email",
   "password": "password",
-  "path_to_www_root": "/var/www/html"
+  "path_to_www_file": "/var/www/html/light.html"
 }
