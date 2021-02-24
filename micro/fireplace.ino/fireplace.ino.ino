@@ -2,8 +2,11 @@
 #include <ESP8266WiFiMulti.h>
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
+#include <Ticker.h>
 
 ESP8266WiFiMulti WiFiMulti;
+
+Ticker blinker;
 
 /*
  * check once an hour to the Pi
@@ -20,30 +23,34 @@ char* wifiPassword = "";
 const int greenPin = 5;
 const int redPin = 0;
 
-void setup() {
-  Serial.begin(9600);
-  delay(1000); // allow Serial setup before printing
-  Serial.println('Begin serial output...');
+bool isRedLightOn = false;
+bool isGreenLightOn = false;
 
-  Serial.println('Setting pin modes...');
+void setup() {
+  Serial.begin(57600);
+  while(!Serial); // allow Serial setup before printing
+  Serial.println("\n\nBegin serial output...");
+
+  Serial.print("Setting pin modes...");
   pinMode(redPin, OUTPUT);
   pinMode(greenPin, OUTPUT);
-  Serial.print('done');
+  Serial.println("done");
+
+  blinker.attach(1, flipRed);
 }
 
 void connectToWifi() {
   WiFi.mode(WIFI_STA);
   WiFiMulti.addAP(ssid, wifiPassword);
 
-  Serial.print("Connecting to wifi...");
+  Serial.print("\nConnecting to wifi...");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
     // TODO: blink both lights while connecting
   }
 
-  Serial.println("");
-  Serial.println("WiFi connected");
+  Serial.println("\nWiFi connected");
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 }
@@ -57,7 +64,7 @@ String getColorFromPi() {
 
   Serial.printf("\nGETTING %s...\n", host);
   if (!http.begin(client, host)) { // if cannot connect
-    Serial.println("[HTTP] Unable to connect to website");
+    Serial.println("ERROR: Unable to connect to website");
   }
 
   int httpCode = http.GET();
@@ -65,7 +72,7 @@ String getColorFromPi() {
     Serial.printf("HTTP error: %s\n", http.errorToString(httpCode).c_str());
   }
 
-  Serial.printf("GET code is: %d\n", httpCode);
+  Serial.printf("GET response code is: %d\n", httpCode);
   if (httpCode == HTTP_CODE_OK) {
     color = http.getString();
     Serial.printf("Server response: %s\n", color.c_str());
@@ -76,6 +83,16 @@ String getColorFromPi() {
   http.end();
 
   return color;
+}
+
+void flipRed() {
+  if(isRedLightOn) {
+    digitalWrite(redPin, LOW);
+    isRedLightOn = false;
+  } else {
+    digitalWrite(redPin, HIGH);
+    isRedLightOn = true;
+  }
 }
 
 void loop() {
